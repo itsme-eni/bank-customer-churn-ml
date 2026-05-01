@@ -68,6 +68,24 @@ def generate_initial_eda_figures(dataframe: pd.DataFrame, output_dir: Path | str
 	_save_current_figure(active_path)
 	saved_paths.append(active_path)
 
+	# Plot churn rate by number of products.
+	plt.figure(figsize=(8, 5))
+	products_rate = dataframe.groupby("products_number", as_index=False)["churn"].mean().sort_values("products_number")
+	sns.barplot(
+		data=products_rate,
+		x="products_number",
+		y="churn",
+		hue="products_number",
+		legend=False,
+		palette="crest",
+	)
+	plt.title("Churn Rate by Products Number")
+	plt.xlabel("Products Number")
+	plt.ylabel("Churn Rate")
+	products_path = out_dir / "churn_by_products_number.png"
+	_save_current_figure(products_path)
+	saved_paths.append(products_path)
+
 	# Plot age distribution by churn class.
 	plt.figure(figsize=(8, 5))
 	sns.boxplot(data=dataframe, x="churn", y="age", hue="churn", legend=False, palette="coolwarm")

@@ -7,6 +7,9 @@ import logging
 import sys
 from pathlib import Path
 
+from rich.console import Console
+from rich.table import Table
+
 # Resolve project root dynamically so script can be run from any working directory.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SRC_DIR = PROJECT_ROOT / "src"
@@ -47,6 +50,7 @@ def main() -> None:
     )
 
     logger = logging.getLogger(__name__)
+    console = Console()
 
     # Read key pipeline settings from YAML config.
     raw_data_path = Path(config["paths"]["raw_data"])
@@ -67,6 +71,16 @@ def main() -> None:
         quality_report.column_count,
         quality_report.duplicate_rows,
     )
+
+    # Show a readable quality summary table in terminal output.
+    summary_table = Table(title="Data Preparation Summary")
+    summary_table.add_column("Check", style="cyan")
+    summary_table.add_column("Value", style="magenta")
+    summary_table.add_row("Rows", str(quality_report.row_count))
+    summary_table.add_row("Columns", str(quality_report.column_count))
+    summary_table.add_row("Duplicate rows", str(quality_report.duplicate_rows))
+    summary_table.add_row("Missing cells (total)", str(sum(quality_report.missing_by_column.values())))
+    console.print(summary_table)
 
     # Add engineered features and persist final processed table.
     engineered_dataframe = add_engineered_features(dataframe)

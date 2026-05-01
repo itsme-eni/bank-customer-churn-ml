@@ -11,3 +11,5 @@ Phase 1 foundation has been scaffolded:
 - artifact/report directories
 
 Next phases implement EDA, feature engineering, model training, evaluation, and prediction CLI.
+
+Detailed implementation progress and exact run commands are documented in [docs/PIPELINE_STATUS.md](docs/PIPELINE_STATUS.md).
