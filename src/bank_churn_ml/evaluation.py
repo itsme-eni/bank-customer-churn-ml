@@ -15,6 +15,10 @@ from sklearn.metrics import (
 )
 
 
+# Centralized metric helpers keep evaluation naming and sorting logic consistent
+# across training/evaluation scripts and saved artifacts.
+
+
 def calculate_classification_metrics(
 	y_true: pd.Series,
 	y_pred: pd.Series,

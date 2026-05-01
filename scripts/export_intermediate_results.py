@@ -27,6 +27,7 @@ from bank_churn_ml.validation import generate_data_quality_report, validate_bina
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
+    # Single config flag keeps this script easy to run from terminal.
     parser = argparse.ArgumentParser(description="Export intermediate results for completed phases")
     parser.add_argument(
         "--config",
@@ -39,6 +40,7 @@ def parse_args() -> argparse.Namespace:
 
 def _save_dataframe(dataframe: pd.DataFrame, output_path: Path) -> Path:
     """Save DataFrame and ensure parent directory exists."""
+    # Utility wrapper used to standardize folder creation + CSV writing.
     output_path.parent.mkdir(parents=True, exist_ok=True)
     dataframe.to_csv(output_path, index=False)
     return output_path
@@ -46,6 +48,7 @@ def _save_dataframe(dataframe: pd.DataFrame, output_path: Path) -> Path:
 
 def export_intermediate_results(config: dict) -> list[Path]:
     """Generate artifacts for completed phases (1 to 4)."""
+    # Read key config values used by multiple phases.
     raw_data_path = PROJECT_ROOT / Path(config["paths"]["raw_data"])
     processed_data_path = PROJECT_ROOT / Path(config["paths"]["processed_data"])
     metrics_dir = PROJECT_ROOT / Path(config["paths"]["metrics_dir"])
@@ -175,6 +178,7 @@ def export_intermediate_results(config: dict) -> list[Path]:
 
 def main() -> None:
     """Run intermediate export pipeline."""
+    # 1) Parse options and load config.
     args = parse_args()
     config = load_config(args.config)
     logger, console = setup_logging(
@@ -184,6 +188,7 @@ def main() -> None:
         log_dir=PROJECT_ROOT / Path(config.get("paths", {}).get("logs_dir", "reports/logs")),
     )
 
+    # 2) Generate intermediate artifacts and summarize in console table.
     logger.info("Exporting intermediate artifacts for completed phases")
     saved_paths = export_intermediate_results(config)
 

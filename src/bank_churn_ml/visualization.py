@@ -9,6 +9,10 @@ import pandas as pd
 import seaborn as sns
 
 
+# Plotting functions here save files directly so script runs are reproducible and
+# do not depend on interactive notebook state.
+
+
 def _save_current_figure(output_path: Path) -> None:
 	"""Save the current matplotlib figure and close it."""
 	# Ensure destination folder exists before writing image files.

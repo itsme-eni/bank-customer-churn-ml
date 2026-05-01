@@ -12,6 +12,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
+# This module creates reusable train/test and preprocessing artifacts so model
+# scripts can focus on training logic instead of data plumbing.
+
+
 def split_features_target(
 	dataframe: pd.DataFrame,
 	target_column: str,

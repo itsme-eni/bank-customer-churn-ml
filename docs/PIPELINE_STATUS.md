@@ -1,6 +1,6 @@
 # Bank Customer Churn ML - Pipeline Status
 
-Last updated: 2026-05-01
+Last updated: 2026-05-02
 
 ## 0) Phase to Script Mapping
 
@@ -32,7 +32,7 @@ Last updated: 2026-05-01
 - Phase 6
 	Purpose: Evaluation metrics and curves
 	Script(s): `scripts/evaluate_model.py`
-	Status: In progress
+	Status: Done
 
 - Phase 7
 	Purpose: Inference/prediction CLI
@@ -54,7 +54,7 @@ Last updated: 2026-05-01
 	Output: Trains candidate models, saves best model, and exports model comparison CSV.
 
 - `scripts/evaluate_model.py`
-	Output: Placeholder (to be implemented).
+	Output: Phase 6 metrics summary (CSV/JSON), confusion matrices, ROC and PR curves.
 
 - `scripts/predict.py`
 	Output: Placeholder (to be implemented).
@@ -105,12 +105,14 @@ Implemented in:
 - [models/best_model.joblib](models/best_model.joblib)
 
 ### 6. Evaluate with classification metrics
-Status: Partially done
-Implemented helper metrics table/confusion utilities in:
+Status: Done
+Implemented in:
 - [src/bank_churn_ml/evaluation.py](src/bank_churn_ml/evaluation.py)
-Remaining:
-- End-to-end evaluation CLI in [scripts/evaluate_model.py](scripts/evaluate_model.py)
-- ROC/PR/confusion figure exports
+- [scripts/evaluate_model.py](scripts/evaluate_model.py)
+Key outputs:
+- [reports/metrics/evaluation_summary.csv](reports/metrics/evaluation_summary.csv)
+- [reports/metrics/evaluation_summary.json](reports/metrics/evaluation_summary.json)
+- [reports/figures/evaluation](reports/figures/evaluation)
 
 ### 7. Handle class imbalance
 Status: Partially done
@@ -161,6 +163,11 @@ Generated after Phase 5 training:
 - Best model artifact: [models/best_model.joblib](models/best_model.joblib)
 - Model comparison table: [reports/metrics/model_comparison.csv](reports/metrics/model_comparison.csv)
 
+Generated after Phase 6 evaluation:
+- Evaluation summary CSV: [reports/metrics/evaluation_summary.csv](reports/metrics/evaluation_summary.csv)
+- Evaluation summary JSON: [reports/metrics/evaluation_summary.json](reports/metrics/evaluation_summary.json)
+- Evaluation plots (ROC/PR/confusion): [reports/figures/evaluation](reports/figures/evaluation)
+
 ## 3) Exact Terminal Commands (PowerShell)
 
 Run from project root:
@@ -179,7 +186,8 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 2. python scripts/generate_intermediate_figures.py
 3. python scripts/export_intermediate_results.py
 4. python scripts/train_model.py
-5. pytest -q
+5. python scripts/evaluate_model.py
+6. pytest -q
 
 ### D. Quick output checks
 1. dir data/processed
@@ -191,8 +199,7 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 
 ## 4) Next Implementation Priority
 
-1. Implement [scripts/evaluate_model.py](scripts/evaluate_model.py)
-2. Implement [scripts/predict.py](scripts/predict.py)
-3. Expand tests for training/evaluation scripts
-4. Expand [README.md](README.md) to full professional portfolio version
-5. Populate notebooks with final narrative and interpretation
+1. Implement [scripts/predict.py](scripts/predict.py)
+2. Expand tests for training/evaluation scripts
+3. Expand [README.md](README.md) to full professional portfolio version
+4. Populate notebooks with final narrative and interpretation

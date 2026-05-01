@@ -14,6 +14,10 @@ from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 
 
+# Modeling utilities here are deliberately lightweight so scripts can compare
+# multiple estimators using the same preprocessing pipeline.
+
+
 @dataclass
 class TrainedModelResult:
 	"""Container for a trained candidate model and its score."""

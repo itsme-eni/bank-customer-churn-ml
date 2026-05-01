@@ -7,6 +7,10 @@ from dataclasses import dataclass
 import pandas as pd
 
 
+# Validation checks in this module are used by scripts before any downstream
+# feature engineering, model training, or reporting starts.
+
+
 @dataclass
 class DataQualityReport:
 	"""Summary of key quality checks for a dataset."""

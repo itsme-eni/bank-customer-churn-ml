@@ -25,6 +25,7 @@ from bank_churn_ml.visualization import generate_initial_eda_figures
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
+    # Allow quick toggling between raw and processed source tables.
     parser = argparse.ArgumentParser(description="Generate intermediate EDA figures")
     parser.add_argument(
         "--config",
@@ -42,6 +43,7 @@ def parse_args() -> argparse.Namespace:
 
 def save_eda_summary_tables(dataframe: pd.DataFrame, metrics_dir: Path) -> list[Path]:
     """Build and save compact EDA summary tables for reproducibility."""
+    # Keep CSV artifacts in reports/metrics so they are easy to version and inspect.
     metrics_dir.mkdir(parents=True, exist_ok=True)
     saved: list[Path] = []
 
@@ -95,6 +97,7 @@ def save_eda_summary_tables(dataframe: pd.DataFrame, metrics_dir: Path) -> list[
 
 def main() -> None:
     """Run figure generation pipeline."""
+    # 1) Parse options and configuration.
     args = parse_args()
     config = load_config(args.config)
     logger, console = setup_logging(
@@ -104,22 +107,24 @@ def main() -> None:
         log_dir=PROJECT_ROOT / Path(config.get("paths", {}).get("logs_dir", "reports/logs")),
     )
 
-    # Choose source table and output figure folder from config.
+    # 2) Choose source table and output folders from config.
     raw_data_path = PROJECT_ROOT / Path(config["paths"]["raw_data"])
     processed_data_path = PROJECT_ROOT / Path(config["paths"]["processed_data"])
     figures_root = PROJECT_ROOT / Path(config["paths"]["figures_dir"])
     metrics_dir = PROJECT_ROOT / Path(config["paths"]["metrics_dir"])
     intermediate_dir = figures_root / "intermediate"
 
+    # 3) Load dataset for plotting.
     source_path = processed_data_path if args.use_processed and processed_data_path.exists() else raw_data_path
     logger.info("Loading dataset for plotting from %s", source_path)
 
     dataframe = load_raw_data(source_path)
 
-    # If plotting from raw data, add engineered columns for richer initial plots.
+    # 4) If plotting from raw data, add engineered columns for richer initial plots.
     if source_path == raw_data_path:
         dataframe = add_engineered_features(dataframe)
 
+    # 5) Export plot files and tabular EDA summaries.
     saved_paths = generate_initial_eda_figures(dataframe, intermediate_dir)
     summary_paths = save_eda_summary_tables(dataframe, metrics_dir)
 
@@ -129,7 +134,7 @@ def main() -> None:
     for path in summary_paths:
         logger.info("Saved summary table: %s", path)
 
-    # Print compact artifact summary in a rich table.
+    # 6) Print compact artifact summary in rich tables for terminal readability.
     figure_table = Table(title="Intermediate Figures")
     figure_table.add_column("#", justify="right", style="cyan")
     figure_table.add_column("File", style="green")

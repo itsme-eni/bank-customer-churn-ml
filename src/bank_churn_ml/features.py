@@ -6,6 +6,10 @@ import numpy as np
 import pandas as pd
 
 
+# Keep feature engineering logic isolated here so notebooks and scripts can use
+# the same transformations without copy-paste.
+
+
 def _safe_ratio(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
 	"""Compute ratio and gracefully handle divide-by-zero cases."""
 	# Use 0.0 whenever denominator is zero to avoid inf/NaN values.

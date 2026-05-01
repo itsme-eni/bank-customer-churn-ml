@@ -30,4 +30,5 @@ def load_config(config_path: Path | str) -> dict[str, Any]:
     if not isinstance(config, dict):
         raise ValueError("Config file must contain a top-level mapping")
 
+    # Return validated config so callers can rely on dictionary access patterns.
     return config

@@ -7,6 +7,10 @@ from pathlib import Path
 import pandas as pd
 
 
+# This module centralizes raw CSV I/O so path handling and column normalization
+# are consistent across scripts.
+
+
 # Canonical schema expected from the Kaggle churn dataset.
 EXPECTED_COLUMNS: list[str] = [
 	"customer_id",
@@ -33,6 +37,7 @@ def load_raw_data(data_path: Path | str) -> pd.DataFrame:
 	Returns:
 		DataFrame with normalized snake_case column names.
 	"""
+	# Resolve and validate the incoming path before attempting file read.
 	path = Path(data_path)
 	if not path.exists():
 		raise FileNotFoundError(f"Raw dataset not found: {path}")

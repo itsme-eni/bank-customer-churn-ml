@@ -28,6 +28,7 @@ from bank_churn_ml.validation import (
 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments for data preparation."""
+    # Keep CLI minimal for portfolio readability: only config override is needed.
     parser = argparse.ArgumentParser(description="Prepare raw churn dataset")
     parser.add_argument(
         "--config",
@@ -40,7 +41,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     """Run data preparation pipeline entry point."""
+    # 1) Parse user-provided CLI options.
     args = parse_args()
+    # 2) Load project configuration.
     config = load_config(args.config)
     logger, console = setup_logging(
         level=config.get("logging", {}).get("level", "INFO"),
@@ -49,18 +52,20 @@ def main() -> None:
         log_dir=PROJECT_ROOT / Path(config.get("paths", {}).get("logs_dir", "reports/logs")),
     )
 
-    # Read key pipeline settings from YAML config.
+    # 3) Read key pipeline settings from YAML config.
     raw_data_path = Path(config["paths"]["raw_data"])
     processed_data_path = Path(config["paths"]["processed_data"])
     target_column = config["project"]["target_column"]
 
+    # 4) Load raw dataset.
     logger.info("Loading raw dataset from %s", raw_data_path)
     dataframe = load_raw_data(raw_data_path)
 
-    # Validate schema and target assumptions before feature creation.
+    # 5) Validate schema and target assumptions before feature creation.
     validate_required_columns(dataframe, EXPECTED_COLUMNS)
     validate_binary_target(dataframe, target_column)
 
+    # 6) Build quality summary for transparent diagnostics.
     quality_report = generate_data_quality_report(dataframe)
     logger.info(
         "Raw data loaded: rows=%s cols=%s duplicates=%s",
@@ -79,7 +84,7 @@ def main() -> None:
     summary_table.add_row("Missing cells (total)", str(sum(quality_report.missing_by_column.values())))
     console.print(summary_table)
 
-    # Add engineered features and persist final processed table.
+    # 7) Add engineered features and persist final processed table.
     engineered_dataframe = add_engineered_features(dataframe)
     saved_path = save_dataframe(engineered_dataframe, processed_data_path)
     logger.info("Saved processed dataset to %s", saved_path)

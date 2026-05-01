@@ -1,0 +1,5 @@
+2026-05-02 00:13:13,723 | INFO | evaluate_model | Loading dataset for evaluation from C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\data\processed\processed_bank_churn.csv
+2026-05-02 00:13:13,760 | INFO | evaluate_model | Evaluating model 'gradient_boosting' from C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\models\primary_model_gradient_boosting.joblib
+2026-05-02 00:13:13,826 | INFO | evaluate_model | Evaluating model 'svm' from C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\models\high_recall_model_svm.joblib
+2026-05-02 00:13:14,487 | INFO | evaluate_model | Saved evaluation summary artifacts to C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\reports\metrics
+2026-05-02 00:13:15,637 | INFO | evaluate_model | Saved evaluation figures to C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\reports\figures\evaluation
