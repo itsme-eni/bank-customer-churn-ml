@@ -1,0 +1,39 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data and model artifacts
+data/processed/*
+!data/processed/.gitkeep
+models/*.joblib
+reports/figures/*
+!reports/figures/.gitkeep
+reports/metrics/*
+!reports/metrics/.gitkeep

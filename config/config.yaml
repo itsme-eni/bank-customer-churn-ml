@@ -1,0 +1,23 @@
+project:
+  random_state: 42
+  target_column: churn
+  id_column: customer_id
+
+paths:
+  raw_data: data/raw/Bank Customer Churn Prediction.csv
+  processed_data: data/processed/processed_bank_churn.csv
+  best_model: models/best_model.joblib
+  figures_dir: reports/figures
+  metrics_dir: reports/metrics
+
+split:
+  test_size: 0.2
+  stratify: true
+
+modeling:
+  cross_validation_folds: 5
+  scoring: roc_auc
+
+logging:
+  level: INFO
+  format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
