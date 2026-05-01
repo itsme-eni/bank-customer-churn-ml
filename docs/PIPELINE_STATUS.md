@@ -2,6 +2,63 @@
 
 Last updated: 2026-05-01
 
+## 0) Phase to Script Mapping
+
+- Phase 1
+	Purpose: Raw data load and validation
+	Script(s): `scripts/prepare_data.py`
+	Status: Done
+
+- Phase 2
+	Purpose: EDA figures and EDA summaries
+	Script(s): `scripts/generate_intermediate_figures.py`
+	Status: Done (baseline EDA scope)
+
+- Phase 3
+	Purpose: Feature engineering application
+	Script(s): `scripts/prepare_data.py`, `scripts/export_intermediate_results.py`
+	Status: Done (core)
+
+- Phase 4
+	Purpose: Preprocessing and split summaries
+	Script(s): `scripts/export_intermediate_results.py`
+	Status: Done (core)
+
+- Phase 5
+	Purpose: Model training and selection
+	Script(s): `scripts/train_model.py`
+	Status: In progress
+
+- Phase 6
+	Purpose: Evaluation metrics and curves
+	Script(s): `scripts/evaluate_model.py`
+	Status: In progress
+
+- Phase 7
+	Purpose: Inference/prediction CLI
+	Script(s): `scripts/predict.py`
+	Status: Not done
+
+## 0.1) Script Quick Reference
+
+- `scripts/prepare_data.py`
+	Output: Processed dataset with engineered features.
+
+- `scripts/generate_intermediate_figures.py`
+	Output: Intermediate EDA plots and EDA summary CSV tables.
+
+- `scripts/export_intermediate_results.py`
+	Output: Phase-wise intermediate artifacts for completed phases.
+
+- `scripts/train_model.py`
+	Output: Placeholder (to be implemented).
+
+- `scripts/evaluate_model.py`
+	Output: Placeholder (to be implemented).
+
+- `scripts/predict.py`
+	Output: Placeholder (to be implemented).
+
 ## 1) Original Scope Tracking
 
 ### 1. Load and validate raw Kaggle dataset
@@ -117,14 +174,16 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 ### C. Run what is implemented today
 1. python scripts/prepare_data.py
 2. python scripts/generate_intermediate_figures.py
-3. pytest -q
+3. python scripts/export_intermediate_results.py
+4. pytest -q
 
 ### D. Quick output checks
 1. dir data/processed
 2. dir reports/figures
 3. dir reports/figures/intermediate
 4. dir reports/metrics
-5. dir models
+5. dir reports/metrics/intermediate
+6. dir models
 
 ## 4) Next Implementation Priority
 
