@@ -37,7 +37,7 @@ Last updated: 2026-05-02
 - Phase 7
 	Purpose: Inference/prediction CLI
 	Script(s): `scripts/predict.py`
-	Status: Not done
+	Status: Done
 
 ## 0.1) Script Quick Reference
 
@@ -57,7 +57,7 @@ Last updated: 2026-05-02
 	Output: Phase 6 metrics summary (CSV/JSON), confusion matrices, ROC and PR curves.
 
 - `scripts/predict.py`
-	Output: Placeholder (to be implemented).
+	Output: Prediction CSV and run-level metrics JSON for scored input rows.
 
 ## 1) Original Scope Tracking
 
@@ -132,22 +132,42 @@ Output:
 - [models/best_model.joblib](models)
 
 ### 10. Prediction script for new data
-Status: Not done
-Target script:
+Status: Done
+Implemented in:
 - [scripts/predict.py](scripts/predict.py)
+Key outputs:
+- [reports/metrics/predictions](reports/metrics/predictions)
 
 ### 11. Reproducible CLI pipeline
-Status: In progress
+Status: Done (core scripts)
 Ready now:
 - data prep
 - intermediate EDA figure generation
-Pending:
-- train/evaluate/predict scripts
+- train
+- evaluate
+- predict
 
 ### 12. Professional recruiter-ready README
-Status: Not done yet
+Status: Done (expanded)
 Current file:
 - [README.md](README.md)
+
+### 14. Notebook narrative coverage
+Status: Done (core)
+Completed notebooks:
+- [notebooks/01_exploratory_data_analysis.ipynb](notebooks/01_exploratory_data_analysis.ipynb)
+- [notebooks/02_model_development.ipynb](notebooks/02_model_development.ipynb)
+- [notebooks/03_model_interpretation.ipynb](notebooks/03_model_interpretation.ipynb)
+
+### 13. Automated test coverage
+Status: Expanded (core unit coverage)
+Current test files:
+- [tests/test_data_loading.py](tests/test_data_loading.py)
+- [tests/test_preprocessing.py](tests/test_preprocessing.py)
+- [tests/test_modeling.py](tests/test_modeling.py)
+- [tests/test_predict.py](tests/test_predict.py)
+Latest run:
+- `9 passed`
 
 ## 2) Current Artifacts
 
@@ -168,15 +188,21 @@ Generated after Phase 6 evaluation:
 - Evaluation summary JSON: [reports/metrics/evaluation_summary.json](reports/metrics/evaluation_summary.json)
 - Evaluation plots (ROC/PR/confusion): [reports/figures/evaluation](reports/figures/evaluation)
 
+Generated after Phase 7 prediction:
+- Prediction outputs folder: [reports/metrics/predictions](reports/metrics/predictions)
+- Example predictions file: [reports/metrics/predictions/processed_data_predictions.csv](reports/metrics/predictions/processed_data_predictions.csv)
+- Example run metrics: [reports/metrics/predictions/processed_data_predictions_run_metrics.json](reports/metrics/predictions/processed_data_predictions_run_metrics.json)
+
 ## 3) Exact Terminal Commands (PowerShell)
 
 Run from project root:
-C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
+`<repo-root>`
 
 ### A. Activate conda env in PowerShell (session-safe)
 1. Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
-2. & "C:/Users/eniko/miniconda3/shell/condabin/conda-hook.ps1"
-3. conda activate bank-churn-ml
+2. conda init powershell  (one-time setup)
+3. Restart PowerShell
+4. conda activate bank-churn-ml
 
 ### B. Install dependencies
 1. python -m pip install -r requirements.txt
@@ -187,7 +213,8 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 3. python scripts/export_intermediate_results.py
 4. python scripts/train_model.py
 5. python scripts/evaluate_model.py
-6. pytest -q
+6. python scripts/predict.py --input data/processed/processed_bank_churn.csv --output reports/metrics/predictions/processed_data_predictions.csv
+7. pytest -q
 
 ### D. Quick output checks
 1. dir data/processed
@@ -199,7 +226,6 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 
 ## 4) Next Implementation Priority
 
-1. Implement [scripts/predict.py](scripts/predict.py)
-2. Expand tests for training/evaluation scripts
-3. Expand [README.md](README.md) to full professional portfolio version
-4. Populate notebooks with final narrative and interpretation
+1. Add higher-level CLI integration tests (optional but recommended)
+2. Add model monitoring and drift-check template artifacts (optional)
+3. Package a lightweight demo app or report dashboard (optional)

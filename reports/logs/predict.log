@@ -1,0 +1,3 @@
+2026-05-02 00:25:07,145 | INFO | predict | Loading prediction input from C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\data\processed\processed_bank_churn.csv
+2026-05-02 00:25:07,436 | INFO | predict | Saved predictions to C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\reports\metrics\predictions\processed_data_predictions.csv
+2026-05-02 00:25:07,462 | INFO | predict | Saved prediction run metrics to C:\Users\eniko\Documents\coding_projects\bank-customer-churn-ml\reports\metrics\predictions\processed_data_predictions_run_metrics.json
