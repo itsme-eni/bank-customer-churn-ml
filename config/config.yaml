@@ -9,6 +9,7 @@ paths:
   best_model: models/best_model.joblib
   figures_dir: reports/figures
   metrics_dir: reports/metrics
+  logs_dir: reports/logs
 
 split:
   test_size: 0.2

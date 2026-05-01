@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import argparse
-import logging
 import sys
 from pathlib import Path
 
 import pandas as pd
-from rich.console import Console
 from rich.table import Table
 
 # Resolve project root dynamically so script runs from any working directory.
@@ -99,12 +97,12 @@ def main() -> None:
     """Run figure generation pipeline."""
     args = parse_args()
     config = load_config(args.config)
-    setup_logging(
+    logger, console = setup_logging(
         level=config.get("logging", {}).get("level", "INFO"),
         fmt=config.get("logging", {}).get("format"),
+        script_name="generate_intermediate_figures",
+        log_dir=PROJECT_ROOT / Path(config.get("paths", {}).get("logs_dir", "reports/logs")),
     )
-    logger = logging.getLogger(__name__)
-    console = Console()
 
     # Choose source table and output figure folder from config.
     raw_data_path = PROJECT_ROOT / Path(config["paths"]["raw_data"])

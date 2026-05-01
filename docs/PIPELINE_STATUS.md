@@ -27,7 +27,7 @@ Last updated: 2026-05-01
 - Phase 5
 	Purpose: Model training and selection
 	Script(s): `scripts/train_model.py`
-	Status: In progress
+	Status: Done (baseline training scope)
 
 - Phase 6
 	Purpose: Evaluation metrics and curves
@@ -51,7 +51,7 @@ Last updated: 2026-05-01
 	Output: Phase-wise intermediate artifacts for completed phases.
 
 - `scripts/train_model.py`
-	Output: Placeholder (to be implemented).
+	Output: Trains candidate models, saves best model, and exports model comparison CSV.
 
 - `scripts/evaluate_model.py`
 	Output: Placeholder (to be implemented).
@@ -97,11 +97,12 @@ Features currently implemented:
 - high_value_customer
 
 ### 5. Train multiple ML models
-Status: Partially done
-Implemented core model factory/training comparison in:
+Status: Done (baseline training scope)
+Implemented in:
 - [src/bank_churn_ml/modeling.py](src/bank_churn_ml/modeling.py)
-Remaining:
-- End-to-end training CLI in [scripts/train_model.py](scripts/train_model.py)
+- [scripts/train_model.py](scripts/train_model.py)
+- [reports/metrics/model_comparison.csv](reports/metrics/model_comparison.csv)
+- [models/best_model.joblib](models/best_model.joblib)
 
 ### 6. Evaluate with classification metrics
 Status: Partially done
@@ -119,13 +120,13 @@ Defined in:
 - [src/bank_churn_ml/modeling.py](src/bank_churn_ml/modeling.py)
 
 ### 8. Model comparison table export
-Status: Not done
-Target output:
+Status: Done
+Output:
 - [reports/metrics/model_comparison.csv](reports/metrics)
 
 ### 9. Save best model
-Status: Not done
-Target output:
+Status: Done
+Output:
 - [models/best_model.joblib](models)
 
 ### 10. Prediction script for new data
@@ -151,12 +152,14 @@ Current file:
 Available now:
 - Processed dataset: [data/processed/processed_bank_churn.csv](data/processed/processed_bank_churn.csv)
 - EDA summary tables: [reports/metrics](reports/metrics)
+- Script logs (rich console + file): [reports/logs](reports/logs)
 
 Generated when figure script is run:
 - Intermediate plots folder: [reports/figures/intermediate](reports/figures)
 
-Not generated yet:
-- Best model artifact: [models](models)
+Generated after Phase 5 training:
+- Best model artifact: [models/best_model.joblib](models/best_model.joblib)
+- Model comparison table: [reports/metrics/model_comparison.csv](reports/metrics/model_comparison.csv)
 
 ## 3) Exact Terminal Commands (PowerShell)
 
@@ -175,7 +178,8 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 1. python scripts/prepare_data.py
 2. python scripts/generate_intermediate_figures.py
 3. python scripts/export_intermediate_results.py
-4. pytest -q
+4. python scripts/train_model.py
+5. pytest -q
 
 ### D. Quick output checks
 1. dir data/processed
@@ -187,8 +191,8 @@ C:/Users/eniko/Documents/coding_projects/bank-customer-churn-ml
 
 ## 4) Next Implementation Priority
 
-1. Implement [scripts/train_model.py](scripts/train_model.py)
-2. Implement [scripts/evaluate_model.py](scripts/evaluate_model.py)
-3. Implement [scripts/predict.py](scripts/predict.py)
+1. Implement [scripts/evaluate_model.py](scripts/evaluate_model.py)
+2. Implement [scripts/predict.py](scripts/predict.py)
+3. Expand tests for training/evaluation scripts
 4. Expand [README.md](README.md) to full professional portfolio version
 5. Populate notebooks with final narrative and interpretation

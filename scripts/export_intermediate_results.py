@@ -4,12 +4,10 @@ from __future__ import annotations
 
 import argparse
 import json
-import logging
 import sys
 from pathlib import Path
 
 import pandas as pd
-from rich.console import Console
 from rich.table import Table
 
 # Resolve project root dynamically so script runs from any working directory.
@@ -179,12 +177,12 @@ def main() -> None:
     """Run intermediate export pipeline."""
     args = parse_args()
     config = load_config(args.config)
-    setup_logging(
+    logger, console = setup_logging(
         level=config.get("logging", {}).get("level", "INFO"),
         fmt=config.get("logging", {}).get("format"),
+        script_name="export_intermediate_results",
+        log_dir=PROJECT_ROOT / Path(config.get("paths", {}).get("logs_dir", "reports/logs")),
     )
-    logger = logging.getLogger(__name__)
-    console = Console()
 
     logger.info("Exporting intermediate artifacts for completed phases")
     saved_paths = export_intermediate_results(config)
